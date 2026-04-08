@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    color: #2d3748;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---- Login Page ---- */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    min-height: 100vh;
+}
+
+.login-box {
+    background: #ffffff;
+    padding: 3rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.login-box h2 {
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #1a202c;
+    letter-spacing: -0.5px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+    font-family: 'Inter', sans-serif;
+}
+
+.login-box input:focus {
+    border-color: #667eea;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.login-box button {
+    width: 100%;
+    padding: 0.85rem;
+    background: #667eea;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.login-box button:hover {
+    background: #5a67d8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(90, 103, 216, 0.3);
+}
+
+.login-error {
+    color: #e53e3e;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    min-height: 1.2em;
+    font-weight: 500;
+}
+
+.demo-creds {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #e2e8f0;
+    font-size: 0.85rem;
+    color: #718096;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.demo-creds p {
+    margin: 0.4rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.demo-creds strong {
+    color: #4a5568;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.demo-creds .cred {
+    color: #667eea;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0.2rem 0.5rem;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.demo-creds .cred:hover {
+    background: rgba(102, 126, 234, 0.2);
+}
+
+/* ---- Dashboard Page ---- */
+.dashboard-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.dashboard-header h2 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #1a202c;
+    letter-spacing: -0.5px;
+}
+
+.logout-btn {
+    padding: 0.5rem 1.2rem;
+    background: #fc8181;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.logout-btn:hover {
+    background: #e53e3e;
+    box-shadow: 0 2px 8px rgba(229, 62, 62, 0.3);
+}
+
+/* user profile card */
+.profile-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.profile-card p {
+    margin: 0.8rem 0;
+    font-size: 1.05rem;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+}
+
+.profile-card span {
+    font-weight: 600;
+    color: #2d3748;
+    width: 80px;
+    display: inline-block;
+}
+
+/* admin table */
+.users-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.users-table th,
+.users-table td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.users-table th {
+    background: #f7fafc;
+    color: #4a5568;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.users-table tr:hover td {
+    background: #fafbff;
+}
+
+.users-table tr:last-child td {
+    border-bottom: none;
+}
+
+.delete-btn {
+    padding: 0.4rem 0.8rem;
+    background: #fed7d7;
+    color: #c53030;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.delete-btn:hover {
+    background: #feebc8;
+    color: #dd6b20;
+}
+
+.msg {
+    text-align: center;
+    padding: 3rem;
+    color: #a0aec0;
+    font-size: 1.1rem;
+}
+

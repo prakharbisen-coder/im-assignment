@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2 id="dashTitle">Dashboard</h2>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        <div id="content">
+            <p class="msg">Loading...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // quick auth check
+        if (!localStorage.getItem('token')) {
+            window.location.href = 'index.html';
+        }
+
+        // figure out what to show based on role
+        async function loadDashboard() {
+            const role = getUserRole();
+
+            if (role === 'admin') {
+                document.getElementById('dashTitle').textContent = 'Admin Dashboard';
+                await loadAdminView();
+            } else {
+                document.getElementById('dashTitle').textContent = 'My Profile';
+                await loadUserView();
+            }
+        }
+
+        // user view - just show their own profile
+        async function loadUserView() {
+            try {
+                const res = await fetchWithAuth(`${BASE_URL}/api/users/me`);
+                const data = await res.json();
+
+                if (!data.success) {
+                    document.getElementById('content').innerHTML = '<p class="msg">Could not load profile.</p>';
+                    return;
+                }
+
+                const user = data.data;
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-card">
+                        <p><span>Name:</span> ${user.name}</p>
+                        <p><span>Email:</span> ${user.email}</p>
+                        <p><span>Role:</span> ${user.role}</p>
+                        <p><span>Joined:</span> ${new Date(user.createdAt).toLocaleDateString()}</p>
+                    </div>
+                `;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('content').innerHTML = '<p class="msg">Error loading profile</p>';
+            }
+        }
+
+        // admin view - show table of all users
+        async function loadAdminView() {
+            try {
+                const res = await fetchWithAuth(`${BASE_URL}/api/users`);
+                const data = await res.json();
+
+                if (!data.success) {
+                    document.getElementById('content').innerHTML = '<p class="msg">Could not load users.</p>';
+                    return;
+                }
+
+                const users = data.data;
+                let tableHTML = `
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                users.forEach(user => {
+                    tableHTML += `
+                        <tr id="row-${user._id}">
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>${user.role}</td>
+                            <td>
+                                <button class="delete-btn" onclick="deleteUser('${user._id}')">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                tableHTML += '</tbody></table>';
+                document.getElementById('content').innerHTML = tableHTML;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('content').innerHTML = '<p class="msg">Error loading users</p>';
+            }
+        }
+
+        // not handling all edge cases for now
+        async function deleteUser(id) {
+            if (!confirm('Are you sure you want to delete this user?')) return;
+
+            try {
+                const res = await fetchWithAuth(`${BASE_URL}/api/users/${id}`, {
+                    method: 'DELETE'
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    // just remove the row from the table instead of reloading
+                    const row = document.getElementById(`row-${id}`);
+                    if (row) row.remove();
+                } else {
+                    alert(data.error || 'Failed to delete user');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Something went wrong');
+            }
+        }
+
+        // kick off
+        loadDashboard();
+    </script>
+</body>
+</html>

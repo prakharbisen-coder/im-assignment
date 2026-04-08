@@ -57,7 +57,7 @@ exports.login = async (req, res, next) => {
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
     // Create token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
         expiresIn: '30d' // Simple 30 day expiration for internship task
     });
 
